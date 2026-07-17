@@ -1,19 +1,36 @@
-name: Build APK
+name: Build Android TUI
 on: [push]
+
 jobs:
-  android:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
         with:
-          targets: aarch64-linux-android
-      - name: Install NDK
+          # Targets for both modern and older Android phones
+          targets: aarch64-linux-android, armv7-linux-androideabi
+
+      - name: Setup Android NDK
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r25c
+
+      - name: Install cargo-ndk
         run: cargo install cargo-ndk
-      - name: Build
+
+      - name: Build for ARMv7 (32-bit)
+        run: cargo ndk -t armeabi-v7a build --release
+
+      - name: Build for ARM64 (64-bit)
         run: cargo ndk -t arm64-v8a build --release
-      - name: Upload
+
+      - name: Upload Binaries
         uses: actions/upload-artifact@v4
         with:
-          name: tui-audio-apk
-          path: target/aarch64-linux-android/release/*.so # Or APK path
+          name: tui-player-android
+          path: |
+            target/armv7-linux-androideabi/release/tui-player
+            target/aarch64-linux-android/release/tui-player
