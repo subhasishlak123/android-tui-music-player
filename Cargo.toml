@@ -1,14 +1,21 @@
 [package]
-name = "tui-player"
+name = "tui_player"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+crate-type = ["cdylib"] # Required for Android APK
+
 [dependencies]
-# Modern TUI library
 ratatui = "0.26"
-# Cross-platform terminal handling (Works on Android/Termux)
 crossterm = "0.27"
-# Audio playback
 rodio = "0.17"
-# For better error handling
-anyhow = "1.0"
+# This is the "bridge" that lets Rust run as an Android Activity
+android-activity = { version = "0.5", features = ["native-activity"] }
+
+[package.metadata.android]
+package = "com.future.tuiplayer"
+label = "Future TUI"
+assets = "assets"
+# Requesting permission to read music files
+permission = ["android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_MEDIA_AUDIO"]
