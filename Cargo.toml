@@ -1,0 +1,10 @@
+[package]
+name = "tui-player"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ratatui = "0.26"
+rodio = "0.17"
+crossterm = "0.27"
+ratadroid = "0.1" # The Android Bridge
