@@ -4,18 +4,17 @@ version = "0.1.0"
 edition = "2021"
 
 [lib]
-crate-type = ["cdylib"] # Required for Android APK
+crate-type = ["cdylib"]
 
 [dependencies]
 ratatui = "0.26"
 crossterm = "0.27"
 rodio = "0.17"
-# This is the "bridge" that lets Rust run as an Android Activity
 android-activity = { version = "0.5", features = ["native-activity"] }
 
 [package.metadata.android]
 package = "com.future.tuiplayer"
 label = "Future TUI"
-assets = "assets"
-# Requesting permission to read music files
-permission = ["android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_MEDIA_AUDIO"]
+target_sdk_version = 30
+min_sdk_version = 21
+build_targets = ["aarch64-linux-android", "armv7-linux-androideabi"]
