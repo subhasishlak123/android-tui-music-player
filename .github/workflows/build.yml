@@ -18,7 +18,15 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Setup Android NDK
+      - name: Setup Android SDK & NDK
+        uses: android-actions/setup-android@v3
+
+      # THIS STEP FIXES YOUR ERROR
+      - name: Install Android Platform 30
+        run: |
+          sdkmanager "platforms;android-30" "build-tools;30.0.3" "platform-tools"
+
+      - name: Setup NDK
         uses: nttld/setup-ndk@v1
         with:
           ndk-version: r25c
@@ -26,10 +34,10 @@ jobs:
       - name: Install cargo-apk
         run: cargo install cargo-apk
 
-      - name: Build APK (ARM64)
+      - name: Build APK for ARM64
         run: cargo apk build --release --target aarch64-linux-android
 
-      - name: Build APK (ARMv7)
+      - name: Build APK for ARMv7
         run: cargo apk build --release --target armv7-linux-androideabi
 
       - name: Upload APKs
