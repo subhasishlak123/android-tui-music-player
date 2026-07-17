@@ -34,6 +34,9 @@ jobs:
       - name: Install cargo-apk
         run: cargo install cargo-apk
 
+      - name: Create empty assets directory
+        run: mkdir -p assets
+
       - name: Build APK for ARM64
         run: cargo apk build --release --target aarch64-linux-android
 
