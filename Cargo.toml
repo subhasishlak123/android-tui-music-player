@@ -4,7 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+# Modern TUI library
 ratatui = "0.26"
-rodio = "0.17"
+# Cross-platform terminal handling (Works on Android/Termux)
 crossterm = "0.27"
-ratadroid = "0.1" # The Android Bridge
+# Audio playback
+rodio = "0.17"
+# For better error handling
+anyhow = "1.0"
